@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>.:: Memory_Game ::.</title>
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/background.css">
+        <link rel="stylesheet" href="css/icofont.min.css">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    
+    <body>
+        <!-- START:: BUTTON 'Start Game' -->
+        <div class="button-game">
+            <button type="button">Start Game</button>
+        </div>
+        
+        <!-- START:: INFORMATION 'Bar Game' -->
+        <div class="info-game">
+            <div id="name">
+                Hello: <span></span>
+            </div>
+            <div id="tries">
+                Wrong: <span>0</span>
+            </div>
+        </div>
+        
+        <!-- START:: CONTAINS 'Card Game' -->
+        <div id="contains-game-blocks" class="contains-game-blocks">                
+            <div id="contains-game-block" class="contains-game-block" data-card="apple">
+                <div id="front" class="face"></div>
+                <div id="back" class="face">
+                    <img src="img/apple.jpg" alt="apple">
+                </div>
+            </div>
+            <div id="contains-game-block" class="contains-game-block" data-card="apple">
+                <div id="front" class="face"></div>
+                <div id="back" class="face">
+                    <img src="img/apple.jpg" alt="apple">
+                </div>
+            </div>
+            
+            <div id="contains-game-block" class="contains-game-block" data-card="banana">
+                <div id="front" class="face"></div>
+                <div id="back" class="face">
+                    <img src="img/banana.jpg" alt="banana">
+                </div>
+            </div>
+            <div id="contains-game-block" class="contains-game-block" data-card="banana">
+                <div id="front" class="face"></div>
+                <div id="back" class="face">
+                    <img src="img/banana.jpg" alt="banana">
+                </div>
+            </div>
+            
+            <div id="contains-game-block" class="contains-game-block" data-card="cherry">
+                <div id="front" class="face"></div>
+                <div id="back" class="face">
+                    <img src="img/cherry.jpg" alt="cherry">
+                </div>
+            </div>
+            <div id="contains-game-block" class="contains-game-block" data-card="cherry">
+                <div id="front" class="face"></div>
+                <div id="back" class="face">
+                    <img src="img/cherry.jpg" alt="cherry">
+                </div>
+            </div>
+            
+            <div id="contains-game-block" class="contains-game-block" data-card="grape">
+                <div id="front" class="face"></div>
+                <div id="back" class="face">
+                    <img src="img/grape.jpg" alt="grape">
+                </div>
+            </div>
+            <div id="contains-game-block" class="contains-game-block" data-card="grape">
+                <div id="front" class="face"></div>
+                <div id="back" class="face">
+                    <img src="img/grape.jpg" alt="grape">
+                </div>
+            </div>
+            
+            <div id="contains-game-block" class="contains-game-block" data-card="mango">
+                <div id="front" class="face"></div>
+                <div id="back" class="face">
+                    <img src="img/mango.jpg" alt="mango">
+                </div>
+            </div>
+            <div id="contains-game-block" class="contains-game-block" data-card="mango">
+                <div id="front" class="face"></div>
+                <div id="back" class="face">
+                    <img src="img/mango.jpg" alt="mango">
+                </div>
+            </div>
+            
+            <div id="contains-game-block" class="contains-game-block" data-card="nectarine">
+                    <div id="front" class="face"></div>
+                    <div id="back" class="face">
+                        <img src="img/nectarine.jpg" alt="nectarine">
+                    </div>
+                </div>
+            <div id="contains-game-block" class="contains-game-block" data-card="nectarine">
+                <div id="front" class="face"></div>
+                <div id="back" class="face">
+                    <img src="img/nectarine.jpg" alt="nectarine">
+                </div>
+            </div>
+            
+            <div id="contains-game-block" class="contains-game-block" data-card="orange">
+                <div id="front" class="face"></div>
+                <div id="back" class="face">
+                    <img src="img/orange.jpg" alt="orange">
+                </div>
+            </div>
+            <div id="contains-game-block" class="contains-game-block" data-card="orange">
+                <div id="front" class="face"></div>
+                <div id="back" class="face">
+                    <img src="img/orange.jpg" alt="orange">
+                </div>
+            </div>
+            
+            <div id="contains-game-block" class="contains-game-block" data-card="pomegranate">
+                <div id="front" class="face"></div>
+                <div id="back" class="face">
+                    <img src="img/pomegranate.jpg" alt="pomegranate">
+                </div>
+            </div>
+            <div id="contains-game-block" class="contains-game-block" data-card="pomegranate">
+                <div id="front" class="face"></div>
+                <div id="back" class="face">
+                    <img src="img/pomegranate.jpg" alt="pomegranate">
+                </div>
+            </div>
+            
+            <div id="contains-game-block" class="contains-game-block" data-card="strawberry">
+                <div id="front" class="face"></div>
+                <div id="back" class="face">
+                    <img src="img/strawberry.jpg" alt="strawberry">
+                </div>
+            </div>
+            <div id="contains-game-block" class="contains-game-block" data-card="strawberry">
+                <div id="front" class="face"></div>
+                <div id="back" class="face">
+                    <img src="img/strawberry.jpg" alt="strawberry">
+                </div>
+            </div>
+                
+            <div id="contains-game-block" class="contains-game-block" data-card="watermellon">
+                <div id="front" class="face"></div>
+                <div id="back" class="face">
+                    <img src="img/watermellon.jpg" alt="watermellon">
+                </div>
+            </div>
+            <div id="contains-game-block" class="contains-game-block" data-card="watermellon">
+                <div id="front" class="face"></div>
+                <div id="back" class="face">
+                    <img src="img/watermellon.jpg" alt="watermellon">
+                </div>
+            </div>
+        </div>
+        
+        <!-- START:: AUDIO 'Control' -->
+        <div class="audio-control">
+            <span id="stop"><i class="icofont-volume-mute"></i></span>
+            <span id="start"><i class="icofont-ui-volume"></i></span>
+        </div>
+        
+        <!-- GAME OVER / DONE -->
+        <div class="btn-reset">00:00</div>
+        <div id="game-over" class="game-over">
+            <div id="box-over" class="box-over">
+                <h1>Game Over</h1>
+                <h3></h3>
+                <h4></h4>
+                <button type="button">Play again <div class="icon"><i class="icofont-refresh"></i></div></button>
+            </div>
+        </div>
+        
+        <div id="wrong-storage" class="wrong-storage">
+            <div id="wrong-storage-refresh" class="wrong-storage-refresh"></div>
+        </div>
+        
+        <!--  HERE AUDIO FILES -->
+        <audio id="fail" src="audio/fail.ogg" preload="auto"></audio>
+        <audio id="success" src="audio/success.wav" preload="auto"></audio>
+        <audio id="start-music" src="audio/Kalimba.mp3" preload="auto"></audio>
+        <audio id="lose" src="audio/lose.wav" preload="auto"></audio>
+        <audio id="win" src="audio/won.mp3" preload="auto"></audio>
+        
+        <script src="main.js"></script>
+    </body>
+</html>

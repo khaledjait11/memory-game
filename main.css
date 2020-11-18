@@ -1,0 +1,220 @@
+* {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+body {font-family: Tahoma, Arial, sans-serif;}
+
+.button-game {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #1e90ffcc;
+    z-index: 2;
+    transition: opacity .5s;
+}
+
+.button-game button {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: crimson;
+    font-size: 26px;
+    color: #FFF;
+    outline: none;
+    border: none;
+    border-radius: 30px;
+    padding: 10px 15px;
+    cursor: pointer;
+    box-shadow: 5px 5px 10px 3px #222;
+    transition: .2s;
+}
+.button-game button:active {box-shadow: 1px 1px 4px 1px #222;}
+
+.info-game {
+    border: 2px solid #1077e3;
+    width: 1080px;
+    margin: 10px auto 0;
+    overflow: hidden;
+    padding: 10px 15px;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, .7);
+}
+.info-game #name {width: 50%;float: left;}
+.info-game #name span {color: forestgreen;}
+.info-game #tries {width: 50%;float: right;text-align: right;}
+.info-game #tries span {color: crimson;}
+
+.contains-game-blocks {
+    width: 1250px;
+    margin: 10px auto 0;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.contains-game-blocks .contains-game-block {
+    height: 200px;
+    transition: transform .5s;
+    transform-style: preserve-3d;
+    cursor: pointer;
+    flex: 1 0 175px;
+    margin: 0 18px 20px;
+    position: relative;
+}
+.contains-game-blocks .contains-game-block.flipped {transform: rotateY(180deg);}
+.contains-game-blocks .contains-game-block.matched {transform: rotateY(180deg);}
+
+.contains-game-blocks .contains-game-block #back {
+    background-color: #607D8B;
+    transform: rotateY(180deg);
+    box-shadow: 5px 5px 5px #222;
+}
+
+.contains-game-blocks .contains-game-block #back img {
+    width: 170px;
+    height: 180px;
+    margin-top: 5px;
+    border-radius: 20px;
+}
+
+.contains-game-blocks .contains-game-block #front {
+    background-color: #333;
+    line-height: 180px;
+    box-shadow: 14px 14px 10px #333;
+}
+
+.contains-game-blocks .contains-game-block #front:before {
+    content: '!';
+    color: #FFF;
+    font-size: 160px;
+}
+
+.contains-game-blocks .contains-game-block .face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    backface-visibility: hidden;
+    border: 5px solid #2196F3;
+    border-radius: 20px;
+}
+
+.audio-control {
+    position: fixed;
+    top: 150px;
+    right: 50px;
+}
+
+.audio-control span {
+    border-radius: 20px;
+    color: #FFF;
+    padding: 5px 15px;
+    font-size: 28px;
+    cursor: pointer;
+    display: grid;
+    margin: 10px 0;
+    box-shadow: 3px 3px 6px #111;
+    transition: .2s;
+}
+.audio-control span#stop {background-color: crimson;}
+.audio-control span#start {background-color: dodgerblue;}
+
+.btn-reset {
+    background-color: crimson;
+    color: #fff;
+    border: none;
+    border-radius: 7px;
+    padding: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    position: fixed;
+    top: 150px;
+    left: 50px;
+    transition: .2s;
+    outline: none;
+}
+
+.btn-reset:active {
+    background-color: red;
+}
+
+.game-over {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(21, 21, 21, .9);
+    display: none;
+}
+
+.game-over .box-over {
+    border: 5px solid #04153c;
+    background-color: #1a2746;
+    color: #FFF;
+    width: 600px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    padding: 20px 0;
+}
+
+.box-over h1 {
+    margin: 0 25px 0;
+    font-size: 3.5em;
+    color: aqua;
+    text-shadow: 5px 6px 19px cyan;
+}
+
+.box-over h3 {
+    margin: 40px 0;
+    font-size: 2em;
+}
+
+.box-over h4 {
+    font-size: 1.5em;
+    margin-bottom: 40px;
+}
+
+.box-over button {
+    background-color: inherit;
+    border: none;
+    color: #fff;
+    font-size: 1.5em;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.box-over button:hover {color: #1ac31a;}
+.box-over button .icon {display: inline-block;}
+.box-over button:hover .icon {
+    transform: rotate(180deg);
+    transition: transform .5s;
+}
+
+.wrong-storage {
+    background-color: crimson;
+    color: #fff;
+    font-size: 1.8em;
+    text-align: center;
+    margin: 45px 0 0 0;
+    line-height: 2;
+}
+
+#wrong-storage-refresh {
+    background-color: #333;
+    color: #fff;
+}
+
+
+
