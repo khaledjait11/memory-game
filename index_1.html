@@ -2,31 +2,32 @@
 <html>
     <head>
         <title>.:: Memory_Game ::.</title>
-        <link rel="stylesheet" href="main.css">
-        <link rel="stylesheet" href="background.css">
-        <link rel="stylesheet" href="icofont.min.css">
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/background.css">
+        <link rel="stylesheet" href="css/icofont.min.css">
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     
     <body>
-        <!-- START:: BUTTON 'Start Game' -->
+        <!-- :: START:: BUTTON 'Start Game' -->
         <div class="button-game">
             <button type="button">Start Game</button>
         </div>
         
-        <!-- START:: INFORMATION 'Bar Game' -->
-        <div class="info-game">
-            <div id="name">
-                Hello: <span></span>
+        <div class="contains-boxright-and-blocks">
+            <!-- :: START:: INFORMATION 'Bar Game' -->
+            <div class="info-game">
+                <div id="name">
+                    Hello: <span></span>
+                </div>
+                <div id="tries">
+                    Wrong: <span>0</span>
+                </div>
             </div>
-            <div id="tries">
-                Wrong: <span>0</span>
-            </div>
-        </div>
-        
-        <!-- START:: CONTAINS 'Card Game' -->
-        <div id="contains-game-blocks" class="contains-game-blocks">                
+            <!-- :: START:: CONTAINS 'Card Game' -->
+            <div class="blocks-display">
+                <div id="contains-game-blocks" class="contains-game-blocks">                
             <div id="contains-game-block" class="contains-game-block" data-card="apple">
                 <div id="front" class="face"></div>
                 <div id="back" class="face">
@@ -78,7 +79,7 @@
                     <img src="img/grape.jpg" alt="grape">
                 </div>
             </div>
-            
+
             <div id="contains-game-block" class="contains-game-block" data-card="mango">
                 <div id="front" class="face"></div>
                 <div id="back" class="face">
@@ -130,61 +131,107 @@
                     <img src="img/pomegranate.jpg" alt="pomegranate">
                 </div>
             </div>
-            
-            <div id="contains-game-block" class="contains-game-block" data-card="strawberry">
-                <div id="front" class="face"></div>
-                <div id="back" class="face">
-                    <img src="img/strawberry.jpg" alt="strawberry">
-                </div>
+        </div>
             </div>
-            <div id="contains-game-block" class="contains-game-block" data-card="strawberry">
-                <div id="front" class="face"></div>
-                <div id="back" class="face">
-                    <img src="img/strawberry.jpg" alt="strawberry">
-                </div>
+            <!-- :: START:: Right Box -->
+            <div id="level-title" class="level-title">
+                <h1>Level <span>1</span></h1>
             </div>
-                
-            <div id="contains-game-block" class="contains-game-block" data-card="watermellon">
-                <div id="front" class="face"></div>
-                <div id="back" class="face">
-                    <img src="img/watermellon.jpg" alt="watermellon">
+            <div class="box-info-right">
+                <!-- :: START :: COUNETR -->
+                <div class="btn-reset">00:00</div>
+                <span></span>
+                <!-- :: START:: AUDIO 'Control' -->
+                <div class="audio-control">
+                    <span id="stop"><i class="icofont-volume-mute"></i></span>
+                    <span id="start"><i class="icofont-ui-volume"></i></span>
                 </div>
-            </div>
-            <div id="contains-game-block" class="contains-game-block" data-card="watermellon">
-                <div id="front" class="face"></div>
-                <div id="back" class="face">
-                    <img src="img/watermellon.jpg" alt="watermellon">
+                <span></span>
+                <!-- :: START:: LOCAL STORAGE 'Wrong' -->
+                <div id="wrong-storage" class="wrong-storage">
+                    <div id="wrong-storage-refresh" class="wrong-storage-refresh"></div>
+                </div>
+                <span></span>
+                <!-- :: START :: DYNAMIC GAME -->
+                <div id="dynamic-game">
+                    <label class="switch">
+                        <input type="checkbox">
+                        <span class="slider round"></span>
+                    </label>
+                    <div class="switch-dynamic">
+                        <p>Dynamic</p>
+                    </div>
+                    <div class="switch-auto">
+                        <p>Auto</p>
+                    </div>
                 </div>
             </div>
         </div>
         
-        <!-- START:: AUDIO 'Control' -->
-        <div class="audio-control">
-            <span id="stop"><i class="icofont-volume-mute"></i></span>
-            <span id="start"><i class="icofont-ui-volume"></i></span>
+        <!-- :: START :: DYNAMIC PLAYING -->
+        <div class="dynamicplaying">
+            <div id="box-dynamic">
+                <h1>Dynamic Playing</h1>
+                <lebel for="fruits">Choose how many cards you want:</lebel>
+                <select name="fruits" id="fruit-number">
+                    <option value="16">16</option>
+                    <option value="24" selected>24</option>
+                    <option value="30">30</option>
+                </select>
+                <button type="button" id="play-dynamic">Start Game</button>
+            </div>
+        </div>
+        <!-- :: START :: RESET AUTO PLAYING  -->
+        <div id="reset-auto-palying">
+            <div id="box-reset-auto">
+                <h1>You Will Reset Auto Playing</h1>
+                <h3>if you click "Yes, I want" you will start playing from the first level</h3>
+                <button type="button" id="btn-reset-auto">Yes, I want</button>
+            </div>
         </div>
         
         <!-- GAME OVER / DONE -->
-        <div class="btn-reset">00:00</div>
         <div id="game-over" class="game-over">
             <div id="box-over" class="box-over">
-                <h1>Game Over</h1>
+                <h1></h1>
                 <h3></h3>
                 <h4></h4>
-                <button type="button">Play again <div class="icon"><i class="icofont-refresh"></i></div></button>
+                <button type="button" id="btn-restart">Restart Level <div class="icon"><i class="icofont-refresh"></i></div></button>
+                <span id="or">OR</span>
+                <button type="button" id="btn-next">Next Level <div class="icon"><i class="icofont-ui-next"></i></div></button>
+                <button type="button" id="btn-next-1" style="display:none">Next Level <div class="icon"><i class="icofont-ui-next"></i></div></button>
+                <button type="button" id="btn-over-dynamic">Choose number</button>
             </div>
         </div>
-        
-        <div id="wrong-storage" class="wrong-storage">
-            <div id="wrong-storage-refresh" class="wrong-storage-refresh"></div>
+        <div id="game-end" class="game-end">
+            <div id="box-game-end" class="box-game-end">
+                <h1>
+                    <span><i class="icofont-badge"></i></span>
+                    <br>
+                    <span>Game Complete</span>
+                </h1>
+                <h2>Congratulations, you have finished all levels</h2>
+                <h3></h3>
+                <button type="button" id="btn-restart-end">Restat Level <i class="icofont-refresh"></i></button>
+                <button type="button" id="btn-restart-all-end">Restart All Levels <i class="icofont-refresh"></i></button>
+            </div>
         </div>
-        
+        <div id="game-dynamic-over" class="game-dynamic-over">
+            <div id="box-over-dynamic" class="box-over-dynamic">
+                <h1>The game ended</h1>
+                <h3>You take 35 seconds</h3>
+                <button type="button" id="btn-dynamic-restart">Restart</button>
+                <button type="button" id="btn-dynamic-reset">Reset</button>
+            </div>
+        </div>
+            
         <!--  HERE AUDIO FILES -->
         <audio id="fail" src="audio/fail.ogg" preload="auto"></audio>
         <audio id="success" src="audio/success.wav" preload="auto"></audio>
         <audio id="start-music" src="audio/Kalimba.mp3" preload="auto"></audio>
         <audio id="lose" src="audio/lose.wav" preload="auto"></audio>
         <audio id="win" src="audio/won.mp3" preload="auto"></audio>
+        <audio id="game-complete" src="audio/game-complete.mp3" preload="auto"></audio>
         
         <script src="main.js"></script>
     </body>
