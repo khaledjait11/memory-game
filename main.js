@@ -11,16 +11,19 @@
   [10] - TENTH STEP: Time is Over
   [11] - 'ELEVENTH STEP' You Win Game
   [12] - 'TWELFTH STEP' Restart Game
+  [13] - 'THIRTEENTH STEP' Next Level => 'Level PlusPlus'
+  [14] - 'FOURTEENTH STEP' Restart All Level
+  [15] - 'FIFTEEN STEP' Switch Dynamic/Auto Play
 */
 
 // :: FIRST STEP :: Remove Slider and Put Name
 document.querySelector('.button-game button').onclick = function () {
-    var promptName = prompt('what is your name ?'),
+    var promptName = prompt('Enter your username'),
         infoName = document.querySelector('#name SPAN');
     
     if (promptName === null || promptName === '') {
         infoName.textContent = 'unknown';
-    } else infoName.textContent = promptName
+    } else infoName.textContent = promptName;
     
     document.querySelector('.button-game').style.opacity = '0';
     setTimeout(() => {
@@ -117,13 +120,13 @@ function startMusic() {
     startThisMusic.play();
     stopMyMusic.onclick = function () {
         startThisMusic.pause();
-        this.style.boxShadow = '1px 1px 2px #000';
-        startMyMusic.style.boxShadow = '3px 3px 6px #111';
+        this.style.boxShadow = '1px 1px 2px #ddbcff';
+        startMyMusic.style.boxShadow = '3px 3px 1px #ddbcff';
     };
     startMyMusic.onclick = function () {
         startThisMusic.play();
-        this.style.boxShadow = '1px 1px 2px #000';
-        stopMyMusic.style.boxShadow = '3px 3px 6px #111';
+        this.style.boxShadow = '1px 1px 2px #ddbcff';
+        stopMyMusic.style.boxShadow = '3px 3px 1px #ddbcff';
     };
 }
 
@@ -140,9 +143,9 @@ function counter() {
             rmSeconds = seconds % 60;
         
         var allMatchedBlocksCount = blocks.filter(matchedBlockCount => matchedBlockCount.classList.contains('matched'));
-        if (allMatchedBlocksCount.length === blocks.length) {
-            clearInterval(count);
-        }
+        if (allMatchedBlocksCount.length === blocks.length) {clearInterval(count);}
+        if (boxDynamic.getAttribute('style') === "display: block;") {clearInterval(count);}
+        if (boxResetAuto.getAttribute('style') === "display: block;") {clearInterval(count);}
         if (minutes < 10) {minutes = "0" + minutes;}
         if (rmSeconds < 10) {rmSeconds = "0" + rmSeconds}
         
@@ -160,25 +163,40 @@ function counter() {
 // :: TENTH STEP :: Time is Over
 function timeIsOver() {
     document.getElementById('game-over').style.display = 'block';
+    document.querySelector('#box-over H1').textContent = "Game Over";
     document.querySelector('#box-over H3').textContent = "Sorry, you lose..";
-    document.querySelector('#box-over H3').style.color = 'crimson';
+    document.querySelector('#box-over H3').style.color = '#d103fc';
     document.getElementById('start-music').pause();
     document.getElementById('start-music').currentTime = 0;
     document.getElementById('lose').play();
     document.querySelector('#box-over H4').style.display = 'none';
+    document.getElementById('btn-next').style.display = 'none';
+    document.getElementById('btn-next-1').style.display = 'none';
+    document.getElementById('or').style.display = 'none';
+    document.getElementById('btn-over-dynamic').style.display = 'none';
+    if (btnSwitchDynamic.checked === true) {
+        document.getElementById('game-over').style.display = 'none';
+        document.getElementById('game-end').style.display = 'none';
+        document.getElementById('game-dynamic-over').style.display = 'block';
+    }
 }
 
 // :: ELEVENTH STEP :: You Win Game
 function matchedBlocks(matchedBlock) {
+    blocks = Array.from(blocksContains.children);
     var allMatchedBlocks = blocks.filter(matchedBlock => matchedBlock.classList.contains('matched'));
     if (allMatchedBlocks.length === blocks.length) {
         document.getElementById('game-over').style.display = 'block';
+        document.querySelector('#box-over H1').textContent = "Well Done";
         document.querySelector('#box-over H3').textContent = "Good game, you win..";
-        document.querySelector('#box-over H3').style.color = 'yellowgreen';
+        document.querySelector('#box-over H3').style.color = '#d103fc';
         document.getElementById('start-music').pause();
         document.getElementById('start-music').currentTime = 0;
-        document.getElementById('win').play();
+        if (blocks.length <= 24) {document.getElementById('win').play();}
         document.querySelector('#box-over H4').style.display = 'block';
+        document.getElementById('btn-next').style.display = 'inline-block';
+        document.getElementById('or').style.display = 'inline-block';
+        document.getElementById('btn-over-dynamic').style.display = 'none';
         
         // How long Game Take it
         var minuteTake = parseInt(document.querySelector('.btn-reset').textContent.slice(0, 2)),
@@ -188,11 +206,30 @@ function matchedBlocks(matchedBlock) {
             timeYouTake = 119 - timeTike,
             timeMinute = Math.floor(timeYouTake / 60),
             timeSecond = timeYouTake % 60;
+        // This is for box '#game-over'
         if (timeMinute === 0) {
             document.querySelector('#box-over H4').textContent =
-                "You Take " + timeSecond + " seconds";
+                "You Taked " + timeSecond + " seconds";
         } else document.querySelector('#box-over H4').textContent =
-            "You Take " + timeMinute + " minutes, and " + timeSecond + " seconds";
+            "You Taked " + timeMinute + " minute and " + timeSecond + " seconds";
+        
+        // This is for box '#game-end'
+        if (timeMinute === 0) {
+            document.querySelector('#box-game-end H3').textContent =
+                "You Taked " + timeSecond + " seconds";
+        } else document.querySelector('#box-game-end H3').textContent =
+            "You Taked " + timeMinute + " minute and " + timeSecond + " seconds";
+        
+        if (btnSwitchDynamic.checked === true) {
+            document.getElementById('game-over').style.display = 'none';
+            document.getElementById('game-end').style.display = 'none';
+            document.getElementById('game-dynamic-over').style.display = 'block';
+            if (timeMinute === 0) {
+                document.querySelector('#game-dynamic-over H3').textContent =
+                "You Taked " + timeSecond + " seconds";
+            } else document.querySelector('#game-dynamic-over H3').textContent =
+            "You Taked " + timeMinute + " minute and " + timeSecond + " seconds";
+        }
     }
 }
 
@@ -205,54 +242,453 @@ blocks.forEach((blockMatched, index) => {
 
 
 // 'TWELFTH STEP' Restart Game
-var restartGame = document.querySelector('#box-over BUTTON'),
+var restartGame = document.getElementById('btn-restart'),
     placeStorage = document.getElementById('wrong-storage'),
     placeName = document.querySelector('#name SPAN'),
     topPlaceStorage = document.getElementById('wrong-storage-refresh'),
     btnReset = parseInt(document.querySelector('.btn-reset').textContent.slice(4)),
     placeWrong = document.querySelector('#tries SPAN');
-restartGame.onclick = function () {
+
+function resetGame() {
     // => Remove Box & Repeat Music, Repeat Audio Button
     document.getElementById('game-over').style.display = 'none';
+    document.getElementById('game-end').style.display = 'none';
     document.getElementById('start-music').play();
-    document.getElementById('stop').style.boxShadow = 'rgb(17, 17, 17) 3px 3px 6px';
-    document.getElementById('start').style.boxShadow = 'rgb(17, 17, 17) 3px 3px 6px';
+    document.getElementById('stop').style.boxShadow = '3px 3px 1px #ddbcff';
+    document.getElementById('start').style.boxShadow = '3px 3px 1px #ddbcff';
     
-    // => Repeat Suffle Order
-    var orderRangeAgain = Array.from(new Array(blocks.length).keys());
-    shuffle(orderRangeAgain);
-    function shuffleAgain(arrayAgain) {
-    var currentAgain = blocks.length,
-        randomAgain,
-        tempAgain;
-    while (currentAgain > 0) {
-        randomAgain = Math.floor(Math.random() * currentAgain);
-        currentAgain--;
-        tempAgain = arrayAgain[currentAgain];
-        arrayAgain[currentAgain] = arrayAgain[randomAgain];
-        arrayAgain[randomAgain] = tempAgain;
-    }
-}
     // Remove Matched, Flipped Classes & Add Order Number
+    shuffle(orderRange);
     blocks.forEach((blockMatchRemove, index) => {
         blockMatchRemove.classList.remove('matched');
         blockMatchRemove.classList.remove('flipped');
         
-        blockMatchRemove.style.order = orderRangeAgain[index];
+        blockMatchRemove.style.order = orderRange[index];
     });
     
     // Storage Time You Wrong
     localStorage.setItem(placeName.textContent, placeWrong.textContent);
     document.getElementById('wrong-storage-refresh').innerHTML =
-        "<div>Your previous playing: <span style='color:crimson'>" + placeWrong.textContent + "</span> tries wrong</div>";
+        "<div>Your previous playing: <b style='color:#d103fc'>" + placeWrong.textContent + "</b> tries wrong</div>";
     placeWrong.textContent = "0";
             
     return counter(); // => Restart Game Counter
-};
-
+}
+// This For Set Info From Local Storage In Document Page
 if (localStorage.length) {
     for (let [key, value] of Object.entries(localStorage)) {
         placeStorage.innerHTML +=
-            "<div><span style='color:dodgerblue'>" + key + "</span> tries wrong <span style='color:dodgerblue'>" + value + "</span> times | <em style='color:grey'>last time</em></div><hr>";
+            "<div><b style='color:#000'>last time:</b><br><b style='color:#6cc5f2'>" + key + "</b> tries wrong <b style='color:#6cc5f2'>" + value + "</b> times</div><hr>";
     }
+}
+
+restartGame.onclick = function () {resetGame();};
+
+// :: THIRTEENTH STEP :: Next Level
+function nextAllLevel() {
+    var createDiv = document.createElement('DIV'),
+        createIdAttribute = document.createAttribute('id'),
+        createClassAttribute = document.createAttribute('class'),
+        createFrontDiv = document.createElement('DIV'),
+        createBackDiv = document.createElement('DIV'),
+        createIdBackAttribute = document.createAttribute('id'),
+        createIdFrontAttribute = document.createAttribute('id'),
+        createClassBackAttribute = document.createAttribute('class'),
+        createClassFrontAttribute = document.createAttribute('class'),
+        createDataCard = document.createAttribute('data-card'),
+        createImgBack = document.createElement('IMG'),
+        appendContainsBlocks = document.getElementById('contains-game-blocks');
+    
+    createIdAttribute.value = "contains-game-block";
+    createClassAttribute.value = "contains-game-block";
+    createDiv.setAttributeNode(createIdAttribute);
+    createDiv.setAttributeNode(createClassAttribute);
+    createIdBackAttribute.value = "back";
+    createIdFrontAttribute.value = "front";
+    createClassBackAttribute.value = "face";
+    createClassFrontAttribute.value = "face";
+    createBackDiv.setAttributeNode(createIdBackAttribute);
+    createBackDiv.setAttributeNode(createClassBackAttribute);
+    createFrontDiv.setAttributeNode(createIdFrontAttribute);
+    createFrontDiv.setAttributeNode(createClassFrontAttribute);
+    createDiv.appendChild(createFrontDiv);
+    createDiv.appendChild(createBackDiv);
+    createBackDiv.appendChild(createImgBack);
+    createDiv.setAttributeNode(createDataCard);
+    appendContainsBlocks.appendChild(createDiv);
+}
+
+// => 'Level Two'
+function nextLevel() {
+    // 'for' inside 'for' to double repeat the function
+    for (i = 1; i <= 4; i++) {for (n = 1; n <= 2; n++) {nextAllLevel();}}
+    resetGame();
+    
+    // This is for set a imgs and "data_card" to new Cards
+    blocks = Array.from(blocksContains.children);
+    for (i = 1; i <= 8; i++) {
+        var createFruitsArray = ["watermellon", "watermellon", "avocado", "avocado", "papaya", "papaya", "kiwi", "kiwi"],
+            blocksCardImgs = Array.from(blocks.slice(16, 24)),
+            blocksBackImgs = blocksCardImgs[i - 1].lastElementChild.firstElementChild;
+        blocksCardImgs[i - 1].setAttribute('data-card', createFruitsArray[i - 1]);
+        blocksBackImgs.src = "img/" + createFruitsArray[i - 1] + ".jpg";
+    }
+    
+    // This is for style new cards and buttons music
+    var frontCards = document.querySelectorAll('#front'),
+        blockCards = document.querySelectorAll('#contains-game-block');
+    for (j = 0; j <= frontCards.length - 1; j++) {
+        frontCards[j].style.fontSize = '180px';
+        frontCards[j].style.lineHeight = '180px';
+        blockCards[j].style.height = '200px';
+        blockCards[j].style.flex = '0 0 200px';
+    } document.querySelector('#contains-game-blocks').style.margin = '10px 35px 0';
+    
+    // This is for shuffle and flip new cards
+    orderRange = Array.from(new Array(blocks.length).keys());
+    shuffle(orderRange);
+    var blocksPlus = blocks.slice(16, 24);
+    blocksPlus.forEach((block, index) => {
+        block.style.order = orderRange[index];
+        block.addEventListener('click', function () {
+            flipBlock(block);
+        });
+    });
+    
+    // This is for repeat comparing all new cards
+    blocks.forEach((blockMatched, index) => {
+        blockMatched.addEventListener('click', function () {
+            var allMatchedBlocks = blocks.filter(matchedBlock => matchedBlock.classList.contains('matched'));
+            if (allMatchedBlocks.length === 24) {
+                matchedBlocks(blockMatched);
+                document.getElementById('btn-next').style.display = 'none';
+                document.getElementById('btn-next-1').style.display = 'inline-block';
+            }
+        });
+    });
+}
+document.getElementById('btn-next').onclick = function () {
+    nextLevel();
+    // This is for Level Rise 
+    var levelTitle = document.querySelector('#level-title H1 SPAN');
+    levelTitle.innerHTML = parseInt(levelTitle.innerHTML) + 1;
+};
+
+// => 'Level Three'
+function nextLevelLast() {
+    // => 'for' inside 'for' to double repeat the function
+    for (i = 1; i <= 3; i++) {for (n = 1; n <= 2; n++) {nextAllLevel();}}
+    resetGame();
+    
+    // This is for set a imgs and "data_card" to new Cards
+    blocks = Array.from(blocksContains.children);
+    for (i = 1; i <= 6; i++) {
+        var createFruitsArray = ["apricot", "apricot", "fig", "fig", "strawberry", "strawberry"],
+            blocksCardImgs = Array.from(blocks.slice(24)),
+            blocksBackImgs = blocksCardImgs[i - 1].lastElementChild.firstElementChild;
+        blocksCardImgs[i - 1].setAttribute('data-card', createFruitsArray[i - 1]);
+        blocksBackImgs.src = "img/" + createFruitsArray[i - 1] + ".jpg";
+    }
+    
+    // This is for style new cards and buttons music
+    var frontCards = document.querySelectorAll('#front'),
+        blockCards = document.querySelectorAll('#contains-game-block');
+    for (j = 0; j <= frontCards.length - 1; j++) {
+        frontCards[j].style.fontSize = '140px';
+        frontCards[j].style.lineHeight = '150px';
+        blockCards[j].style.height = '168px';
+        blockCards[j].style.flex = '1 0 165px';
+    }
+    document.querySelector('#contains-game-blocks').style.margin = '10px 0 0';
+    
+    // This is for Level Rise 
+    var levelTitle = document.querySelector('#level-title H1 SPAN');
+    levelTitle.innerHTML = parseInt(levelTitle.innerHTML) + 1;
+    
+    // This is for shuffle and flip new cards
+    orderRange = Array.from(new Array(blocks.length).keys());
+    shuffle(orderRange);
+    var blocksPlus = blocks.slice(24);
+    blocksPlus.forEach((block, index) => {
+        block.style.order = orderRange[index];
+        block.addEventListener('click', function () {
+            flipBlock(block);
+        });
+    });
+    
+    // This is for repeat comparing all new cards and start a new music
+    blocks.forEach((blockMatched, index) => {
+        blockMatched.addEventListener('click', function () {
+            var allMatchedBlocks = blocks.filter(matchedBlock => matchedBlock.classList.contains('matched'));
+            if (allMatchedBlocks.length === 30) {
+                document.getElementById('game-end').style.display = 'block';
+                document.getElementById('game-over').style.display = 'none';
+                document.getElementById('start-music').pause();
+                document.getElementById('start-music').currentTime = 0;
+                if (blocks.length > 24) {document.getElementById('game-complete').play()}
+                if (btnSwitchDynamic.checked === true) {
+                    document.getElementById('game-end').style.display = 'none';
+                    document.getElementById('game-dynamic-over').style.display = 'block';
+                }
+            }
+        });
+    });
+    document.getElementById('btn-restart-end').onclick = resetGame;
+}
+document.getElementById('btn-next-1').onclick = function () {nextLevelLast();}
+
+// :: FOURTEENTH STEP :: Restart All Level
+var restartAllGame = document.getElementById('btn-restart-all-end');
+restartAllGame.onclick = function () {
+    resetGame(); // This is for reset classes and info
+    document.querySelector('#level-title H1 SPAN').innerHTML = "1";
+    
+    // This is for remove cards
+    for (a = 16; a <= blocks.length - 1; a++) {blocks[a].remove();}
+    
+    // This is for reset normal size to the cards
+    var frontCards = document.querySelectorAll('#front'),
+        blockCards = document.querySelectorAll('#contains-game-block');
+    for (j = 0; j <= frontCards.length - 1; j++) {
+        frontCards[j].style.fontSize = '195px';
+        frontCards[j].style.lineHeight = '180px';
+        blockCards[j].style.height = '219px';
+        blockCards[j].style.flex = '200px';
+    }
+    
+    // This is for display box=end & box=over
+    blocks = Array.from(blocksContains.children);
+    blocks.forEach((blockMatched, index) => {
+        blockMatched.addEventListener('click', function () {
+            var allMatchedBlocks = blocks.filter(matchedBlock => matchedBlock.classList.contains('matched'));
+            if (allMatchedBlocks.length === blocks.length) {
+                document.getElementById('game-end').style.display = 'none';
+                document.getElementById('game-over').style.display = 'block';
+                document.getElementById('btn-next').style.display = 'inline-block';
+                document.getElementById('btn-next-1').style.display = 'none';
+                if (btnSwitchDynamic.checked === true) {
+                    document.getElementById('game-over').style.display = 'none';
+                }
+            }
+        });
+    });
+};
+
+// :: FIFTEEN STEP :: Switch Dynamic/Auto Play
+var btnSwitchDynamic = document.querySelector('#dynamic-game INPUT'),
+    boxDynamic = document.querySelector('.dynamicplaying'),
+    startPlayDynamic = document.getElementById('play-dynamic'),
+    selectNumber = document.getElementById('fruit-number'),
+    btnDynamicRestart = document.getElementById('btn-dynamic-restart'),
+    btnDynamicReset = document.getElementById('btn-dynamic-reset'),
+    boxResetAuto = document.getElementById('reset-auto-palying'),
+    btnResetAuto = document.getElementById('btn-reset-auto');
+
+// => 'Switch Dynamic Play'
+function dynamicGame() {
+    // => Box Choosing How Many Cards You Want
+    setTimeout(() => {boxDynamic.style.display = "block";},400);
+    document.getElementById('start-music').pause();
+    document.getElementById('start-music').currentTime = 0;
+    
+    // => After Choosing How many Cards
+    startPlayDynamic.onclick = function () {
+        resetGame();
+        boxDynamic.style.display = "none";
+        document.querySelector('#level-title H1').textContent = "Dynamic Playing";
+        //  Block Length == 16
+        if (blocks.length === 16) {
+            if (selectNumber.children[selectNumber.options.selectedIndex].value === "24") {
+                nextLevel();
+            } // => 16 // 24
+            if (selectNumber.children[selectNumber.options.selectedIndex].value === "30") {
+                for (i = 1; i <= 7; i++) {for (n = 1; n <= 2; n++) {nextAllLevel();}}
+                resetGame();
+                blocks = Array.from(blocksContains.children);
+                for (i = 1; i <= 14; i++) {
+                    var createFruitsArray = ["watermellon", "watermellon", "avocado", "avocado", "papaya", "papaya", "kiwi", "kiwi", "apricot", "apricot", "fig", "fig", "strawberry", "strawberry"],
+                        blocksCardImgs = Array.from(blocks.slice(16, 30)),
+                        blocksBackImgs = blocksCardImgs[i - 1].lastElementChild.firstElementChild;
+                    blocksCardImgs[i - 1].setAttribute('data-card', createFruitsArray[i - 1]);
+                    blocksBackImgs.src = "img/" + createFruitsArray[i - 1] + ".jpg";
+                }
+                var frontCards = document.querySelectorAll('#front'),
+                    blockCards = document.querySelectorAll('#contains-game-block');
+                for (j = 0; j <= frontCards.length - 1; j++) {
+                    frontCards[j].style.fontSize = '140px';
+                    frontCards[j].style.lineHeight = '150px';
+                    blockCards[j].style.height = '168px';
+                    blockCards[j].style.flex = '1 0 165px';
+                }
+                document.querySelector('#contains-game-blocks').style.margin = '10px 0 0';
+                orderRange = Array.from(new Array(blocks.length).keys());
+                shuffle(orderRange);
+                var blocksPlus = blocks.slice(16, 30);
+                blocksPlus.forEach((block, index) => {
+                    block.style.order = orderRange[index];
+                    block.addEventListener('click', function () {
+                        flipBlock(block);
+                    });
+                });
+                blocks.forEach((blockMatched, index) => {
+                    blockMatched.addEventListener('click', function () {
+                        var allMatchedBlocks = blocks.filter(matchedBlock => matchedBlock.classList.contains('matched'));
+                        if (allMatchedBlocks.length === 30) {
+                            document.getElementById('game-end').style.display = 'block';
+                            document.getElementById('game-over').style.display = 'none';
+                            document.getElementById('start-music').pause();
+                            document.getElementById('start-music').currentTime = 0;
+                            if (blocks.length > 24) {document.getElementById('game-complete').play()}
+                            if (btnSwitchDynamic.checked === true) {
+                                document.getElementById('game-end').style.display = 'none';
+                                document.getElementById('game-dynamic-over').style.display = 'block';
+                            }
+                        }
+                    });
+                });
+            } // => 16 // 30
+        }
+        // Block Length == 24
+        if (blocks.length === 24) {
+            if (selectNumber.children[selectNumber.options.selectedIndex].value === "16") {
+                if (blocks.length === 24) {
+                    for (a = 16; a <= blocks.length - 1; a++) {blocks[a].remove();}
+                    blocks = Array.from(blocksContains.children);
+                    var frontCards = document.querySelectorAll('#front'),
+                        blockCards = document.querySelectorAll('#contains-game-block');
+                    for (j = 0; j <= frontCards.length - 1; j++) {
+                        frontCards[j].style.fontSize = '180px';
+                        frontCards[j].style.lineHeight = '195px';
+                        blockCards[j].style.height = '219px';
+                        blockCards[j].style.flex = '1 0 200px';
+                    } document.querySelector('#contains-game-blocks').style.margin = '10px 0 0';
+                    resetGame();
+                }
+            } // => 24 // 16
+            if (selectNumber.children[selectNumber.options.selectedIndex].value === "30") {
+                for (i = 1; i <= 3; i++) {for (n = 1; n <= 2; n++) {nextAllLevel();}}
+                resetGame();
+                blocks = Array.from(blocksContains.children);
+                for (i = 1; i <= 6; i++) {
+                    var createFruitsArray = ["apricot", "apricot", "fig", "fig", "strawberry", "strawberry"],
+                        blocksCardImgs = Array.from(blocks.slice(24)),
+                        blocksBackImgs = blocksCardImgs[i - 1].lastElementChild.firstElementChild;
+                    blocksCardImgs[i - 1].setAttribute('data-card', createFruitsArray[i - 1]);
+                    blocksBackImgs.src = "img/" + createFruitsArray[i - 1] + ".jpg";
+                }
+                var frontCards = document.querySelectorAll('#front'),
+                    blockCards = document.querySelectorAll('#contains-game-block');
+                for (j = 0; j <= frontCards.length - 1; j++) {
+                    frontCards[j].style.fontSize = '140px';
+                    frontCards[j].style.lineHeight = '150px';
+                    blockCards[j].style.height = '168px';
+                    blockCards[j].style.flex = '1 0 165px';
+                }
+                document.querySelector('#contains-game-blocks').style.margin = '10px 0 0';
+                orderRange = Array.from(new Array(blocks.length).keys());
+                shuffle(orderRange);
+                var blocksPlus = blocks.slice(24);
+                blocksPlus.forEach((block, index) => {
+                    block.style.order = orderRange[index];
+                    block.addEventListener('click', function () {
+                        flipBlock(block);
+                    });
+                });
+                blocks.forEach((blockMatched, index) => {
+                    blockMatched.addEventListener('click', function () {
+                        var allMatchedBlocks = blocks.filter(matchedBlock => matchedBlock.classList.contains('matched'));
+                        if (allMatchedBlocks.length === 30) {
+                            document.getElementById('game-end').style.display = 'block';
+                            document.getElementById('game-over').style.display = 'none';
+                            document.getElementById('start-music').pause();
+                            document.getElementById('start-music').currentTime = 0;
+                            if (blocks.length > 24) {document.getElementById('game-complete').play()}
+                            if (btnSwitchDynamic.checked === true) {
+                                document.getElementById('game-end').style.display = 'none';
+                                document.getElementById('game-dynamic-over').style.display = 'block';
+                            }
+                        }
+                    });
+                });
+            } // => 24 // 30
+        }
+        // Block Length == 30
+        if (blocks.length === 30) {
+            if (selectNumber.children[selectNumber.options.selectedIndex].value === "16") {
+                if (blocks.length === 30) {
+                    for (a = 16; a <= blocks.length - 1; a++) {blocks[a].remove();}
+                    blocks = Array.from(blocksContains.children);
+                    var frontCards = document.querySelectorAll('#front'),
+                        blockCards = document.querySelectorAll('#contains-game-block');
+                    for (j = 0; j <= frontCards.length - 1; j++) {
+                        frontCards[j].style.fontSize = '180px';
+                        frontCards[j].style.lineHeight = '195px';
+                        blockCards[j].style.height = '219px';
+                        blockCards[j].style.flex = '1 0 200px';
+                    } document.querySelector('#contains-game-blocks').style.margin = '10px 0 0';
+                    resetGame();
+                }
+            } // => 30 // 16
+            if (selectNumber.children[selectNumber.options.selectedIndex].value === "24") {
+                if (blocks.length === 30) {
+                    for (a = 24; a <= blocks.length - 1; a++) {blocks[a].remove();}
+                    blocks = Array.from(blocksContains.children);
+                    var frontCards = document.querySelectorAll('#front'),
+                        blockCards = document.querySelectorAll('#contains-game-block');
+                    for (j = 0; j <= frontCards.length - 1; j++) {
+                        frontCards[j].style.fontSize = '180px';
+                        frontCards[j].style.lineHeight = '180px';
+                        blockCards[j].style.height = '200px';
+                        blockCards[j].style.flex = '0 0 200px';
+                    } document.querySelector('#contains-game-blocks').style.margin = '10px 35px 0';
+                    resetGame();
+                }
+            }
+        }
+        
+        // => Rsetart Same Many Cards
+        btnDynamicRestart.onclick = function () {
+            resetGame();
+            document.getElementById('game-dynamic-over').style.display = 'none';
+        };
+        // => Choosing New Number of The Cards
+        btnDynamicReset.onclick = function () {
+            document.getElementById('game-dynamic-over').style.display = 'none';
+            boxDynamic.style.display = "block";
+        };
+    };
+};
+
+// => 'Switch Auto Play'
+function resetAutoGame() {
+    setTimeout(() => {boxResetAuto.style.display = 'block';}, 400);
+    document.getElementById('start-music').pause();
+    document.getElementById('start-music').currentTime = 0;
+    btnResetAuto.onclick = function () {
+        resetGame();
+        boxResetAuto.style.display = 'none';
+        document.querySelector('#level-title H1').innerHTML = "Level <span>1</span>";
+        blocks = Array.from(blocksContains.children);
+        if (blocks.length === 24 || blocks.length === 30) {
+            for (a = 16; a <= blocks.length - 1; a++) {blocks[a].remove();}
+            blocks = Array.from(blocksContains.children);
+            document.getElementById('btn-next').style.display = "inline-block";
+            document.getElementById('btn-next-1').style.display = "none";
+            var frontCards = document.querySelectorAll('#front'),
+                blockCards = document.querySelectorAll('#contains-game-block');
+            for (j = 0; j <= frontCards.length - 1; j++) {
+                frontCards[j].style.fontSize = '180px';
+                frontCards[j].style.lineHeight = '195px';
+                blockCards[j].style.height = '219px';
+                blockCards[j].style.flex = '1 0 200px';
+            } document.querySelector('#contains-game-blocks').style.margin = '10px 0 0';
+        }
+    };
+}
+
+// => This is for do function of switch Dynamic/Auto play
+btnSwitchDynamic.onclick = function () {
+    if (btnSwitchDynamic.checked === true) {
+        dynamicGame();
+    } else resetAutoGame();
 }
